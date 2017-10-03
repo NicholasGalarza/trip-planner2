@@ -1,5 +1,5 @@
 var express = require("express");
-var volleyball = require("volleyball");
+var morgan = require("morgan");
 var bodyParser = require("body-parser");
 var path = require("path");
 
@@ -8,7 +8,7 @@ var db = require("./models").db;
 var app = express();
 
 // logging and body-parsing
-app.use(volleyball);
+app.use(morgan('dev')); 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
