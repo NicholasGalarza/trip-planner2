@@ -3,12 +3,13 @@ var morgan = require("morgan");
 var bodyParser = require("body-parser");
 var path = require("path");
 
-var db = require("./models").db;
+
+var db = require("./models");
 
 var app = express();
 
 // logging and body-parsing
-app.use(morgan('dev')); 
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
