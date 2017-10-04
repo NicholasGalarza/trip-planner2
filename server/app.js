@@ -3,10 +3,10 @@ var morgan = require("morgan");
 var bodyParser = require("body-parser");
 var path = require("path");
 var {db, Hotel, Restaurant, Activity, Place} = require('./db');
-const api = require('../routes');
+const apiRouter = require('../routes');
 
 var app = express();
-const PORT = 3000;
+const PORT = 3001;
 // logging and body-parsing
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -22,7 +22,7 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
+app.use('/api', apiRouter);
 // handle any errors
 app.use((err, req, res, next) => {
   console.error(err, err.stack);

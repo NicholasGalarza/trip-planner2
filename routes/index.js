@@ -5,7 +5,7 @@ const Hotel = models.Hotel;
 
 let allAttractions = {};
 
-router.get('/api', (req, res, next) => {
+router.get('/', (req, res, next) => { //home for api
   Hotel.findAll({})
     .then((hotels) => {
       allAttractions.hotels = hotels;
@@ -24,6 +24,4 @@ router.get('/api', (req, res, next) => {
     .catch(next);
 });
 
-module.exports = {
-  Hotel
-};
+module.exports = router;
