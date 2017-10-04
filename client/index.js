@@ -19,15 +19,19 @@ marker.addTo(map);
 fetch('/api/attractions')
 .then(result => result.json())
 .then( data => {
-   console.log(data);
-data.hotels.forEach((hotel) => {
-  var nameH = hotel.name;
-  var options = document.createElement('option');
-  options.appendChild(nameH);
-  var hotelC = document.getElementById('hotels-choices');
-  hotelC.appendChild(options);
-});
- // document.getElementById("")
- // createElement
+  console.log(data);//i want to look at how to get the selected opti
+  renderOptions('hotels-choices', 'hotels');
+  renderOptions('restaurants-choices', 'restaurants');
+  renderOptions('activities-choices', 'activities');
+
+  function renderOptions (selectorId, table){
+    var selector = document.getElementById(selectorId);
+    data[table].forEach((item) => {
+      var options = document.createElement('option');
+      options.text = item.name;
+      selector.appendChild(options);
+    });
+  }
+
 })
 .catch(console.error);
