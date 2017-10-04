@@ -2,12 +2,11 @@ var express = require("express");
 var morgan = require("morgan");
 var bodyParser = require("body-parser");
 var path = require("path");
-
-
-var db = require("./models");
+var {db, Hotel, Restaurant, Activity, Place} = require('./db');
+const api = require('../routes');
 
 var app = express();
-
+const PORT = 3000;
 // logging and body-parsing
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -25,16 +24,15 @@ app.use(function(req, res, next) {
 });
 
 // handle any errors
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   console.error(err, err.stack);
   res.status(err.status || 500);
   res.send("Something went wrong: " + err.message);
 });
 
-// listen on a port
-var port = 3000;
-app.listen(port, function() {
-  console.log("The server is listening closely on port", port);
+// listen on a PORT
+app.listen(PORT, function() {
+  console.log("The server is listening closely on PORT", PORT);
   db
     .sync()
     .then(function() {
