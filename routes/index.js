@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const models = require('../server/db');
-const Hotel = models.Hotel;
+const {db, Hotel, Restaurant, Activity, Place} = require('../server/db');
 
 let allAttractions = {};
 

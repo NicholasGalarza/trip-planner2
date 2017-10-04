@@ -15,14 +15,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // static file-serving middleware
 app.use(express.static(path.join(__dirname, "..", "public")));
-
+app.use('/api', apiRouter);
 // failed to catch req above means 404, forward to error handler
 app.use(function(req, res, next) {
   var err = new Error("Not Found");
   err.status = 404;
   next(err);
 });
-app.use('/api', apiRouter);
+
 // handle any errors
 app.use((err, req, res, next) => {
   console.error(err, err.stack);
