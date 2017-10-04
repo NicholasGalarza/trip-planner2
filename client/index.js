@@ -17,21 +17,61 @@ const marker = buildMarker("activities", fullstackCoords);
 marker.addTo(map);
 
 fetch('/api/attractions')
-.then(result => result.json())
-.then( data => {
-  console.log(data);//i want to look at how to get the selected opti
-  renderOptions('hotels-choices', 'hotels');
-  renderOptions('restaurants-choices', 'restaurants');
-  renderOptions('activities-choices', 'activities');
+  .then(result => result.json())
+  .then(data => {
+    // function to populate the selectors.
+    function renderOptions(selectorId, table) {
+      let index = 0;
+      const selector = document.getElementById(selectorId);
+      data[table].forEach((item) => {
+        let option = document.createElement('option');
+        option.value = index++;
+        option.text = item.name;
+        selector.appendChild(option);
+      });
+    }
 
-  function renderOptions (selectorId, table){
-    var selector = document.getElementById(selectorId);
-    data[table].forEach((item) => {
-      var options = document.createElement('option');
-      options.text = item.name;
-      selector.appendChild(options);
+    // Populate options fields.
+    renderOptions('hotels-choices', 'hotels');
+    renderOptions('restaurants-choices', 'restaurants');
+    renderOptions('activities-choices', 'activities');
+
+    function getSelectedText(elementId) {
+      const elt = document.getElementById(elementId);
+      return (elt.selectedIndex == -1) ? null : elt.options[elt.selectedIndex].text;
+    }
+
+    function addToList(selectedText, table) {
+      const ul = document.getElementById(table);
+      const li = document.createElement("li"); //i been saying uneed to ake a li
+      li.appendChild(document.createTextNode(selectedText));
+      ul.appendChild(li);
+    }
+
+    // Here are our event listenrs for adding to iteraray.
+    const hotelButton = document.getElementById('hotels-add');
+    hotelButton.addEventListener('click', () => {
+      const text = getSelectedText('hotels-choices');
+      addToList(text, 'hotels-list');
     });
-  }
 
-})
-.catch(console.error);
+    const restaurantButton = document.getElementById('restaurants-add');
+    restaurantButton.addEventListener('click', () => {
+      const text = getSelectedText('restaurants-choices');
+      addToList(text, 'restaurants-list');
+    });
+
+    const activityButton = document.getElementById('activities-add');
+    activityButton.addEventListener('click', () => {
+      const text = getSelectedText('activities-choices');
+      addToList(text, 'activities-list');
+    });
+
+
+
+
+
+
+
+  })
+  .catch(console.error);
