@@ -4,8 +4,8 @@ const {db, Hotel, Restaurant, Activity, Place} = require('../server/db');
 
 let allAttractions = {};
 
-router.get('/', (req, res, next) => { //home for api
-  Hotel.findAll({})
+router.get('/attractions', (req, res, next) => { //home for api
+  Hotel.findAll({ include: [{ all: true }] })
     .then((hotels) => {
       allAttractions.hotels = hotels;
       return Restaurant.findAll();
@@ -22,5 +22,7 @@ router.get('/', (req, res, next) => { //home for api
     })
     .catch(next);
 });
+// router.get('/attractions', function(req, res, next){
 
+// });
 module.exports = router;

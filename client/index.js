@@ -15,3 +15,19 @@ const map = new mapboxgl.Map({
 
 const marker = buildMarker("activities", fullstackCoords);
 marker.addTo(map);
+
+fetch('/api/attractions')
+.then(result => result.json())
+.then( data => {
+   console.log(data);
+data.hotels.forEach((hotel) => {
+  var nameH = hotel.name;
+  var options = document.createElement('option');
+  options.appendChild(nameH);
+  var hotelC = document.getElementById('hotels-choices');
+  hotelC.appendChild(options);
+});
+ // document.getElementById("")
+ // createElement
+})
+.catch(console.error);
